@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<title>Puzzle</title>
+	</head>
+<style>
+table{border-collapse: collapse;}
+div.one { position:absolute; cursor:pointer; }
+
+	td { border: solid 1px #7F8C8D; width:100px; height:100px; }
+	
+	td:hover {
+    background:#cae5fd;
+    border-bottom:1px solid black;
+    border-top: 1px solid black;
+}
+.left{position: relative; float: right; color: aliceblue;}
+</style>
+
+<body style="background-color:#1D2A35;">
+<div class="left"><img src='puzzle/Bob.jpg' width='600' height='400'><br>Meadow Lake by Bob Ross </div>
+<div id=puzzle ></div>
+<div id=fragments ></div>
+</body>
+<script>
+	var objectIdFromTd="";
+	var puzzle_name="";
+//Mouse script
+function allowDrop(event) {
+    event.preventDefault(); // Prevents the normal browser fuction that makes moving a picture a link to that picture (it stays as a picture after dropping it)
+}
+
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event, object) { 
+
+	if(document.getElementById(object.id).innerHTML!=""){
+
+		document.getElementById(objectIdFromTd).innerHTML=document.getElementById(object.id).innerHTML;
+		document.getElementById(object.id).innerHTML=puzzle_name;
+		//alert(document.getElementById(objectIdFromTd).innerHTML+"///"+document.getElementById(object.id).innerHTML); //alert to determine what you are moving and to where you are moving it
+	}
+	else{
+		var data = event.dataTransfer.getData("text");
+    	event.target.appendChild(document.getElementById(data)); // dodanie obiektu do box_1
+	}
+    event.preventDefault(); 
+
+}
+function getId(x){
+	objectIdFromTd=x.id;
+	//alert(x);
+	console.log(objectIdFromTd);
+	puzzle_name=document.getElementById(objectIdFromTd).innerHTML;
+	console.log(puzzle_name);
+
+}
+
+function to_spread_puzzels(){ 
+	var t = ""; 
+	var i = 0; var ii = 0; 
+	for(i=1; i<=6;	i++	){				
+		for(ii=1; ii<=9; ii++ ){ 
+			t = t + "<img  id=puz_" + i + ii; 
+			t = t + " src='puzzle/" + i + ii + ".jpg' ";  
+			t = t + " draggable='true' ondragstart='drag(event)' ";
+			t = t + " width='100' height='100'>";
+		}
+	}
+
+	return t;
+}
+
+//Main script
+var t="";
+t = "<table>";
+for(i =1; i <= 6; i++ ){
+	t = t + "<tr>";
+	for(ii=1; ii <= 9; ii++){ 
+		t = t + "<td id=td_" + i + "_" + ii + " ";
+		t = t + " ondrop='drop(event, this)' onmousedown='getId(this)' ondragover='allowDrop(event)' >";
+
+		t = t + "</td>";
+	}
+	t = t + "</tr>";
+}
+t = t + "</table>";
+
+	document.getElementById("puzzle").innerHTML = t;
+	document.getElementById("fragments").innerHTML =  to_spread_puzzels();
+</script>
+<footer>
+	Website made by Maciej Kałamarz 310619
+</footer>
+</html>
