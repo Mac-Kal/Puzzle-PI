@@ -24,7 +24,7 @@ div.one { position:absolute; cursor:pointer; }
 <script>
 	var objectIdFromTd="";
 	var puzzle_name="";
-//Mouse script
+
 function allowDrop(event) {
     event.preventDefault(); // Prevents the normal browser fuction that makes moving a picture a link to that picture (it stays as a picture after dropping it)
 }
@@ -43,12 +43,12 @@ function drop(event, object) {
 	}
 	else{
 		var data = event.dataTransfer.getData("text");
-    	event.target.appendChild(document.getElementById(data)); // dodanie obiektu do box_1
+    	event.target.appendChild(document.getElementById(data)); //Adding element to the targeted div
 	}
     event.preventDefault(); 
 
 }
-function getId(x){
+function getId(x){ //function to get id from targeted object required to swap puzzle pieces
 	objectIdFromTd=x.id;
 	//alert(x);
 	console.log(objectIdFromTd);
@@ -57,7 +57,7 @@ function getId(x){
 
 }
 
-function to_spread_puzzels(){ 
+function to_spread_puzzels(){ //placing all puzzle pieces in order could be changed to make it spread random order by selecting pices one by one and then making them swap with diferent one
 	var t = ""; 
 	var i = 0; var ii = 0; 
 	for(i=1; i<=6;	i++	){				
@@ -72,10 +72,10 @@ function to_spread_puzzels(){
 	return t;
 }
 
-//Main script
+
 var t="";
 t = "<table>";
-for(i =1; i <= 6; i++ ){
+for(i =1; i <= 6; i++ ){ //making a table which acts as a template for the puzzle pieces
 	t = t + "<tr>";
 	for(ii=1; ii <= 9; ii++){ 
 		t = t + "<td id=td_" + i + "_" + ii + " ";
